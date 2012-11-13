@@ -12,9 +12,8 @@ headline() -> "Tabs Pane Example".
 
 body() -> [
 
-  %% wf:wire(tabs, #tab_select{tab = 1}),
-
- #tabs{
+    %% wf:wire(tabs, #tab_select{tab = 1}),
+    #tabs{
  	id = tabs,
         tag = tabs1,
  	options=[
@@ -22,13 +21,11 @@ body() -> [
  	    {event, mouseover}
  	],
  	tabs=[
- 	    #tab{title="Tab 1", body=["Tab one body..."]},
- 	    #tab{title="Tab 2", body=["Tab two body..."]}
- 	]
+ 	    #tab{title="Tab 1", url = "/content/tabs2.htm"},
+ 	    #tab{title="Tab 2", body=["Tab two body..."]},
+	    #tab{title="Tab 3", body=["Tab three body..."]}
+   	]
     }
-
-  %% wf:wire(tabs, #tabs_event{type = tabselect, trigger = tabs, postback = {tabs, tabselect}})
-
 ].
 
 tabs_event(EventType, TabsTag, TabAnchor, TabPanel, TabIndex) ->

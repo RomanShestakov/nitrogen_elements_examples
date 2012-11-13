@@ -38,6 +38,8 @@ dispatch() ->
      {["css", '*'], static_resource, [{root, "./priv/static/css"}]},
      {["images", '*'], static_resource, [{root, "./priv/static/images"}]},
      {["nitrogen", '*'], static_resource, [{root, "./priv/static/nitrogen"}]},
+     {["content", '*'], static_resource, [{root, "./priv/content"}]},
+     %% {["/", '*.html'], static_resource, [{root, "./priv"}]},
 
      %% Add routes to your modules here. The last entry makes the
      %% system use the dynamic_route_handler, which determines the
