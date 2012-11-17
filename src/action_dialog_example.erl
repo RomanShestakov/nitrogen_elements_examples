@@ -12,9 +12,8 @@ headline() -> "Action Dialog Example".
 
 body() -> [
 
-    #dialog{body = "Action Dialog Body"}
-
+    #dialog{buttons = [{"Ok", ok}], show_cancel = true, title = "Action Dialog Title", body = "Action Dialog Body"}
 ].
 
-%% tabs_event(EventType, TabsTag, TabAnchor, TabPanel, TabIndex) ->
-%%     ?PRINT({tabs_event, EventType, TabsTag, TabAnchor, TabPanel, TabIndex}).
+dialog_event(Event) ->
+    ?PRINT({page_event, Event}).
