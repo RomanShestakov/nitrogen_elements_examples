@@ -39,6 +39,7 @@ dispatch() ->
      {["images", '*'], static_resource, [{root, "./priv/static/images"}]},
      {["nitrogen", '*'], static_resource, [{root, "./priv/static/nitrogen"}]},
      {["content", '*'], static_resource, [{root, "./priv/content"}]},
+     {["history", '*'], static_resource, [{root, "./priv/history"}]},
      %% {["/", '*.html'], static_resource, [{root, "./priv"}]},
 
      %% Add routes to your modules here. The last entry makes the

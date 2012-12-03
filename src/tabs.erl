@@ -18,7 +18,8 @@ body() -> [
         tag = tabs1,
  	options=[
  	    {selected, 0},
- 	    {event, mouseover}
+ 	    %% {event, mouseover},
+	    {cache, true}
  	],
  	tabs=[
  	    #tab{title="Tab 1", url = "/content/tabs2.htm"},
@@ -28,5 +29,11 @@ body() -> [
     }
 ].
 
+tabs_event('tabsselect', TabsTag, TabAnchor, TabPanel, TabIndex) ->
+    ?PRINT({tabs_event, 'tabsselect', TabsTag, TabAnchor, TabPanel, TabIndex});
 tabs_event(EventType, TabsTag, TabAnchor, TabPanel, TabIndex) ->
-    ?PRINT({tabs_event, EventType, TabsTag, TabAnchor, TabPanel, TabIndex}).
+    %% ?PRINT({tabs_event, EventType, TabsTag, TabAnchor, TabPanel, TabIndex}).
+    void.
+
+%% pushState() ->
+
