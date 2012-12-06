@@ -3,10 +3,6 @@
     // Prepare
     var
     History = window.History; // Note: We are using a capital H instead of a lower h
-    // $ = window.jQuery,
-    // document = window.document;
-    // $window = $(window);
-    // var pushed = false;
     var timestamps = []; //array of uniq timestamps
 
     if ( !History.enabled ) {
@@ -33,7 +29,8 @@
 	    delete timestamps[State.data.timestamp];
 	}
 	else {
-	//page.history_back();
+	    // send postbacks to nitrogen page
+	    page.history_back(State.data);
 	    console.log('backbutton fired!');
         //History.log(State.data, State.title, State.url);
 	}

@@ -39,6 +39,8 @@ pushState(TabIndex) ->
     wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {state:~s});", [TabIndex, TabIndex, TabIndex])).
     %%ok.
 
+api_event(history_back, B, C) ->
+    ?PRINT({history_back_event, C, B});
 api_event(A, B, C) ->
     ?PRINT(A), ?PRINT(B), ?PRINT(C).
 
