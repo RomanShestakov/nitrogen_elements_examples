@@ -9,8 +9,9 @@ title() -> "Tabs Pane Example".
 headline() -> "Tabs Pane Example".
 
 body() ->
+    tabs_bind_event(tabs, tabs1, 'tabsshow'),
     wf:wire(#api { name=history_back, tag=f1 }),
-    %% wf:wire(tabs, #tab_select{tab = 1}),
+    %% wf:wire(tabs, #tab_select{tab = 0}),
     [
 	#tabs{
 	    id = tabs,
@@ -28,19 +29,31 @@ body() ->
 	}
 ].
 
-tabs_event('tabsselect', TabsTag, TabAnchor, TabPanel, TabIndex) ->
-    ?PRINT({tabs_event, 'tabsselect', TabsTag, TabAnchor, TabPanel, TabIndex}),
+tabs_event('tabsshow', TabsTag, TabAnchor, TabPanel, TabIndex, _FromIndex) ->
+    ?PRINT({tabs_event, 'tabsshow', TabsTag, TabAnchor, TabPanel, TabIndex, _FromIndex}),
     pushState(TabIndex);
-tabs_event(_EventType, _TabsTag, _TabAnchor, _TabPanel, _TabIndex) ->
-    %% ?PRINT({tabs_event, EventType, TabsTag, TabAnchor, TabPanel, TabIndex}).
-    void.
+tabs_event(EventType, _TabsTag, _TabAnchor, _TabPanel, TabIndex, _FromIndex) ->
+    ?PRINT({tabs_event, EventType, TabIndex}).
 
 pushState(TabIndex) ->
-    wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {state:~s});", [TabIndex, TabIndex, TabIndex])).
-    %%ok.
+    wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
 
-api_event(history_back, B, C) ->
-    ?PRINT({history_back_event, C, B});
+api_event(history_back, B, [[_,{data, Data}]]) ->
+    ?PRINT({history_back_event, B, Data}),
+    TabIndex = proplists:get_value(tabindex, Data),
+    tabs_unbind_event(tabs, 'tabsshow'),
+    wf:wire(tabs, #tab_select{tab = TabIndex}),
+    tabs_bind_event(tabs, tabs1, 'tabsshow');
 api_event(A, B, C) ->
     ?PRINT(A), ?PRINT(B), ?PRINT(C).
 
+tabs_bind_event(TabsID, TabsTag, Event) ->
+    PickledPostbackInfo = wf_event:serialize_event_context(tabsevent, TabsID, TabsID, 'element_tabs'),
+    wf:wire(TabsID, wf:f("jQuery(obj('~s')).bind('~s', function(e, ui) {
+             var selectedTab = $(obj('~s')).tabs('option', 'selected');
+	     Nitrogen.$queue_event('~s','~s',\"event=\" + e.type + \"&tabs_tag=\" + '~s' + \"&tab=\" + ui.tab + \
+    	     \"&panel=\" + ui.panel + \"&index=\" + ui.index +\"&fromindex=\" + selectedTab)})",
+			 [TabsID, Event, TabsID, TabsID, PickledPostbackInfo, TabsTag])).
+
+tabs_unbind_event(TabsID, Event) ->
+    wf:wire(TabsID, wf:f("jQuery(obj('~s')).unbind('~s');", [TabsID, Event])).

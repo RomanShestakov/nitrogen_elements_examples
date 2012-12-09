@@ -17,7 +17,7 @@
 	var t = new Date().getTime();
 	timestamps[t] = t;
 	// adding to history
-	History.pushState({timestamp:t}, title, url);
+	History.pushState({timestamp:t, data:anydata}, title, url);
     }
     // assign to global pushState
     window.pushState = pushState;
