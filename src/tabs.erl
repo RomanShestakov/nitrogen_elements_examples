@@ -29,10 +29,10 @@ body() ->
 	}
 ].
 
-tabs_event('tabsshow', TabsTag, TabAnchor, TabPanel, TabIndex, _FromIndex) ->
-    ?PRINT({tabs_event, 'tabsshow', TabsTag, TabAnchor, TabPanel, TabIndex, _FromIndex}),
+tabs_event('tabsshow', TabsTag, TabAnchor, TabPanel, TabIndex) ->
+    ?PRINT({tabs_event, 'tabsshow', TabsTag, TabAnchor, TabPanel, TabIndex}),
     pushState(TabIndex);
-tabs_event(EventType, _TabsTag, _TabAnchor, _TabPanel, TabIndex, _FromIndex) ->
+tabs_event(EventType, _TabsTag, _TabAnchor, _TabPanel, TabIndex) ->
     ?PRINT({tabs_event, EventType, TabIndex}).
 
 pushState(TabIndex) ->
@@ -50,10 +50,9 @@ api_event(A, B, C) ->
 tabs_bind_event(TabsID, TabsTag, Event) ->
     PickledPostbackInfo = wf_event:serialize_event_context(tabsevent, TabsID, TabsID, 'element_tabs'),
     wf:wire(TabsID, wf:f("jQuery(obj('~s')).bind('~s', function(e, ui) {
-             var selectedTab = $(obj('~s')).tabs('option', 'selected');
-	     Nitrogen.$queue_event('~s','~s',\"event=\" + e.type + \"&tabs_tag=\" + '~s' + \"&tab=\" + ui.tab + \
-    	     \"&panel=\" + ui.panel + \"&index=\" + ui.index +\"&fromindex=\" + selectedTab)})",
-			 [TabsID, Event, TabsID, TabsID, PickledPostbackInfo, TabsTag])).
+                       Nitrogen.$queue_event('~s','~s',\"event=\" + e.type + \"&tabs_tag=\" + '~s' + \"&tab=\" + ui.tab + \
+                        \"&panel=\" + ui.panel + \"&index=\" + ui.index)})",
+			 [TabsID, Event, TabsID, PickledPostbackInfo, TabsTag])).
 
 tabs_unbind_event(TabsID, Event) ->
     wf:wire(TabsID, wf:f("jQuery(obj('~s')).unbind('~s');", [TabsID, Event])).
