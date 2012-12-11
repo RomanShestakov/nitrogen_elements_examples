@@ -31,8 +31,8 @@ body() ->
 tabs_event(?EVENT_TABSSHOW, Tabs_Id, TabIndex) ->
     wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
 
-api_event(history_back, B, [[_,{data, Data}]]) ->
-    ?PRINT({history_back_event, B, Data}),
+api_event(history_back, _B, [[_,{data, Data}]]) ->
+    %% ?PRINT({history_back_event, B, Data}),
     TabIndex = proplists:get_value(tabindex, Data),
     wf:wire(tabs, #tab_event_off{event = ?EVENT_TABSSHOW}),
     wf:wire(tabs, #tab_select{tab = TabIndex}),
