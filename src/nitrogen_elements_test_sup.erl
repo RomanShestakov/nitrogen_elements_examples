@@ -42,7 +42,8 @@ dispatch() ->
      {["content", '*'], static_resource, [{root, "./priv/content"}]},
      {["history", '*'], static_resource, [{root, "./priv/history"}]},
      %% {["/", '*.html'], static_resource, [{root, "./priv"}]},
-
+	%{["bf_api", func, '*'], bf_api_web, []}.
+     {["get_jqgrid_data", '*'], get_jqgrid_data, []},
      %% Add routes to your modules here. The last entry makes the
      %% system use the dynamic_route_handler, which determines the
      %% module name based on the path. It's a good way to get
