@@ -2,7 +2,6 @@
 
 -include_lib("nitrogen_elements/include/nitrogen_elements.hrl").
 -compile(export_all).
-%% -define(EVENT_TABSSHOW, 'tabsshow').
 
 main() -> #template{file=filename:join([web_common:templates(), "onecolumn.html"])}.
 
@@ -33,8 +32,12 @@ body() ->
 	}
     ].
 
-%% tabs_event(?EVENT_TABSSHOW, Tabs_Id, TabIndex) ->
-%%     wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
+jqgrid_event(onSelectRow, Id) ->
+    %% wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
+    ?PRINT({jqgrid_event, onSelectRow, Id});
+jqgrid_event(EventType, Id) ->
+    %% wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
+    ?PRINT({jqgrid_event, EventType, Id}).
 
 %% api_event(history_back, _B, [[_,{data, Data}]]) ->
 %%     %% ?PRINT({history_back_event, B, Data}),
