@@ -30,7 +30,6 @@ body() ->
 		{sortorder, <<"desc">>},
 		{caption, <<"JSON Example">>}
 	    ]
-	    %% actions=[#jqgrid_event{type = 'onSelectRow'}]
 	}
     ].
 
