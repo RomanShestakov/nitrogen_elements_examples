@@ -28,7 +28,7 @@ body() ->
 	}
 ].
 
-tabs_event(?EVENT_TABSSHOW, Tabs_Id, TabIndex) ->
+tabs_event(?EVENT_TABSSHOW, _Tabs_Id, TabIndex) ->
     wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
 
 api_event(history_back, _B, [[_,{data, Data}]]) ->

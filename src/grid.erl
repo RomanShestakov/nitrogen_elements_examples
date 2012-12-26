@@ -10,9 +10,9 @@ title() -> "Grid Example".
 headline() -> "Grid Example".
 
 body() ->
+    wf:wire(jqgrid, #jqgrid_event{type = 'onSelectRow'}),
     [
-
-	#datagrid{
+	#jqgrid{
 	    id = jqgrid,
 	    options=[
 		{url, 'get_jqgrid_data'},
@@ -30,9 +30,9 @@ body() ->
 		{sortorder, <<"desc">>},
 		{caption, <<"JSON Example">>}
 	    ]
+	    %% actions=[#jqgrid_event{type = 'onSelectRow'}]
 	}
     ].
-
 
 %% tabs_event(?EVENT_TABSSHOW, Tabs_Id, TabIndex) ->
 %%     wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
