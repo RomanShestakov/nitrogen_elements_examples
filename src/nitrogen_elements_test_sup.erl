@@ -38,7 +38,7 @@ dispatch() ->
      {["css", '*'], static_resource, [{root, "./priv/static/css"}]},
      {["images", '*'], static_resource, [{root, "./priv/static/images"}]},
      {["nitrogen", '*'], static_resource, [{root, "./priv/static/nitrogen"}]},
-     {["jqgrid", '*'], static_resource, [{root, "./priv/jqgrid"}]},
+     {["jqgrid", '*'], static_resource, [{root, "./priv/static/jqgrid"}]},
      {["content", '*'], static_resource, [{root, "./priv/content"}]},
      {["history", '*'], static_resource, [{root, "./priv/history"}]},
      %% {["/", '*.html'], static_resource, [{root, "./priv"}]},

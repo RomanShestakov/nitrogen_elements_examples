@@ -9,7 +9,7 @@ title() -> "Grid Example".
 headline() -> "Grid Example".
 
 body() ->
-    wf:wire(jqgrid, #jqgrid_event{type = 'onSelectRow'}),
+    wf:wire(jqgrid, #jqgrid_event{type = ?ONSELECTROW}),
     [
 	#jqgrid{
 	    id = jqgrid,
@@ -32,9 +32,10 @@ body() ->
 	}
     ].
 
-jqgrid_event(onSelectRow, Id) ->
+jqgrid_event(?ONSELECTROW, RowId, Status) ->
     %% wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
-    ?PRINT({jqgrid_event, onSelectRow, Id});
+    ?PRINT({jqgrid_event, ?ONSELECTROW, RowId, Status}).
+
 jqgrid_event(EventType, Id) ->
     %% wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
     ?PRINT({jqgrid_event, EventType, Id}).
