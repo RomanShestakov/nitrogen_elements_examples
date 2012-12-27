@@ -40,7 +40,7 @@ dispatch() ->
      {["nitrogen", '*'], static_resource, [{root, "./priv/static/nitrogen"}]},
      {["jqgrid", '*'], static_resource, [{root, "./priv/static/jqgrid"}]},
      {["content", '*'], static_resource, [{root, "./priv/content"}]},
-     {["history", '*'], static_resource, [{root, "./priv/history"}]},
+     {["history", '*'], static_resource, [{root, "./priv/static/history"}]},
      %% {["/", '*.html'], static_resource, [{root, "./priv"}]},
 	%{["bf_api", func, '*'], bf_api_web, []}.
      {["get_jqgrid_data", '*'], get_jqgrid_data, []},
