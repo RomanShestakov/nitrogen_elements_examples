@@ -1,8 +1,8 @@
-{application,nitrogen_elements_test,
+{application,nitrogen_elements_examples,
              [{description,"Web interface"},
               {vsn,"1"},
               {applications,[kernel,stdlib]},
               {registered,[]},
-              {mod,{nitrogen_elements_test_app,[]}},
+              {mod,{nitrogen_elements_examples_app,[]}},
               {env,[]},
               {modules,[]}]}.

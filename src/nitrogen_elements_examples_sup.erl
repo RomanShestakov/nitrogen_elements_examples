@@ -1,5 +1,5 @@
 %% -*- mode: nitrogen -*-
--module(nitrogen_elements_test_sup).
+-module(nitrogen_elements_examples_sup).
 -behaviour(supervisor).
 -export([
 	 start_link/0,
@@ -41,8 +41,6 @@ dispatch() ->
      {["jqgrid", '*'], static_resource, [{root, "./priv/static/jqgrid"}]},
      {["content", '*'], static_resource, [{root, "./priv/content"}]},
      {["history", '*'], static_resource, [{root, "./priv/static/history"}]},
-     %% {["/", '*.html'], static_resource, [{root, "./priv"}]},
-	%{["bf_api", func, '*'], bf_api_web, []}.
      {["get_jqgrid_data", '*'], get_jqgrid_data, []},
      %% Add routes to your modules here. The last entry makes the
      %% system use the dynamic_route_handler, which determines the
