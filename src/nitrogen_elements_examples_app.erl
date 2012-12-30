@@ -17,7 +17,7 @@ start() ->
     [begin application:start(A), io:format("~p~n", [A]) end || A <- ?APPS].
 
 start(_StartType, _StartArgs) ->
-    nitrogen_elements_test_sup:start_link().
+    nitrogen_elements_examples_sup:start_link().
 
 stop(_State) ->
     ok.
