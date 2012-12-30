@@ -5,10 +5,10 @@
 -include_lib ("nitrogen_core/include/wf.hrl").
 
 docroot() ->
-    code:priv_dir(nitrogen_elements_test) ++ "/static".
+    code:priv_dir(nitrogen_elements_examples) ++ "/static".
 
 templates() ->
-    code:priv_dir(nitrogen_elements_test) ++ "/templates".
+    code:priv_dir(nitrogen_elements_examples) ++ "/templates".
 
 header(Selected) ->
     wf:wire(Selected, #add_class { class=selected }),
