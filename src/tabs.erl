@@ -11,15 +11,13 @@ headline() -> "Tabs Pane Example".
 
 body() ->
     wf:wire(tabs, #tab_event_on{event = ?EVENT_TABSSHOW}),
+    %% wire tabs_select to show how to change tab after tabs control was initialized
+    wf:wire(tabs, #tab_select{tab = 2}),
     wf:wire(#api{name=history_back, tag=f1}),
     [
 	#tabs{
 	    id = tabs,
-	    options=[
-		{selected, 0}
-		%% {event, mouseover},
-		%% {cache, true}
-	    ],
+	    options=[{selected, 0}],
 	    tabs=[
 		#tab{title="Tab 1", url = "/content/tabs2.htm"},
 		#tab{title="Tab 2", body=["Tab two body..."]},
