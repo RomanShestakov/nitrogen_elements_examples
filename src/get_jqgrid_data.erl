@@ -1,3 +1,7 @@
+% Nitrogen Elements Examples
+% Copyright (c) 2013 Roman Shestakov (romanshestakov@yahoo.co.uk)
+% See MIT-LICENSE for licensing information.
+
 -module(get_jqgrid_data).
 
 -export([init/1, content_types_provided/2, to_json/2, generate_etag/2]).

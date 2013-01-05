@@ -1,3 +1,7 @@
+% Nitrogen Elements Examples
+% Copyright (c) 2013 Roman Shestakov (romanshestakov@yahoo.co.uk)
+% See MIT-LICENSE for licensing information.
+
 -module(grid).
 
 -include_lib("nitrogen_elements/include/nitrogen_elements.hrl").

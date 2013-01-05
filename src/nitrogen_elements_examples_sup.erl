@@ -1,4 +1,7 @@
-%% -*- mode: nitrogen -*-
+% Nitrogen Elements Examples
+% Copyright (c) 2013 Roman Shestakov (romanshestakov@yahoo.co.uk)
+% See MIT-LICENSE for licensing information.
+
 -module(nitrogen_elements_examples_sup).
 -behaviour(supervisor).
 -export([
