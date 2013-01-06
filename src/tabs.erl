@@ -14,9 +14,10 @@ title() -> "Tabs Pane Example".
 headline() -> "Tabs Pane Example".
 
 body() ->
+    %% bind to tabs 'tabsshow' event
     wf:wire(tabs, #tab_event_on{event = ?EVENT_TABSSHOW}),
     %% wire tabs_select to show how to change tab after tabs control was initialized
-    wf:wire(tabs, #tab_select{tab = 2}),
+    wf:wire(tabs, #tab_select{tab = 1}),
     wf:wire(#api{name=history_back, tag=f1}),
     [
 	#tabs{
@@ -31,6 +32,7 @@ body() ->
 ].
 
 tabs_event(?EVENT_TABSSHOW, _Tabs_Id, TabIndex) ->
+    ?PRINT({tabs_event, ?EVENT_TABSSHOW}),
     wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
 
 api_event(history_back, _B, [[_,{data, Data}]]) ->
