@@ -43,6 +43,8 @@ body() ->
 
 	%% set of controls for test progressbar with postback
 	#panel{body = [
+	    #label { text="Example for password box with postback: " },
+	    #p{},
 	    #label { text="Password Box: " },
 	    #password {id = password_1, text="" },
 	    #p{},
@@ -58,6 +60,6 @@ event({ID, keyup}) ->
 event({ID, complete}) ->
     ?PRINT({progressbarcomplete, ID});
 event({ID, changed}) ->
-    ?PRINT({progressbarchange, ID}).
+    ?PRINT({progressbarchange, ID});
 event(Event) ->
     ?PRINT({Event}).
