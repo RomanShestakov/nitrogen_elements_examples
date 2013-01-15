@@ -10,7 +10,7 @@
 	 stop/1
 	]).
 
--define(APPS, [nprocreg, sync, nitrogen_elements_examples]).
+-define(APPS, [nprocreg, sync, crypto, ranch, cowboy, nitrogen_elements_examples]).
 
 %% ===================================================================
 %% Application callbacks

@@ -9,6 +9,8 @@
 	 init/1
 	]).
 
+-compile(export_all).
+
 -include_lib("webmachine/include/webmachine.hrl").
 -include_lib ("nitrogen_core/include/wf.hrl").
 
@@ -26,37 +28,24 @@ start_link() ->
 init([]) ->
     {ok, BindAddress} = application:get_env(bind_address),
     {ok, Port} = application:get_env(port),
+    {ok, ServerName} = application:get_env(server_name),
+    {ok, DocRoot} = application:get_env(document_root),
+    DocRootBin = wf:to_binary(DocRoot),
 
-    Options = [
-        {ip, BindAddress},
-        {port, Port},
-        {dispatch, dispatch()}
-    ],
-    webmachine_mochiweb:start(Options),
-    {ok, { {one_for_one, 5, 10}, []} }.
+    io:format("Starting Cowboy Server (~s) on ~s:~p, root: '~s'~n", [ServerName, BindAddress, Port, DocRoot]),
 
-dispatch() ->
-    [
-     %% Static content handlers...
-     {["css", '*'], static_resource, [{root, "./priv/static/css"}]},
-     {["images", '*'], static_resource, [{root, "./priv/static/images"}]},
-     {["nitrogen", '*'], static_resource, [{root, "./priv/static/nitrogen"}]},
-     {["jqgrid", '*'], static_resource, [{root, "./priv/static/jqgrid"}]},
-     {["content", '*'], static_resource, [{root, "./priv/content"}]},
-     {["history", '*'], static_resource, [{root, "./priv/static/history"}]},
-     {["get_jqgrid_data", '*'], get_jqgrid_data, []},
-     %% Add routes to your modules here. The last entry makes the
-     %% system use the dynamic_route_handler, which determines the
-     %% module name based on the path. It's a good way to get
-     %% started, but you'll likely want to remove it after you have
-     %% added a few routes.
-     %%
-     %% p.s. - Remember that you will need to RESTART THE VM for
-     %%        dispatch changes to take effect!!!
-     %%
-     %% {["path","to","module1",'*'], ?MODULE, module_name_1}
-     %% {["path","to","module2",'*'], ?MODULE, module_name_2}
-     %% {["path","to","module3",'*'], ?MODULE, module_name_3}
-     {["/"], nitrogen_webmachine, index},
-     {['*'], nitrogen_webmachine, dynamic_route_handler}
-    ].
+    {ok, _} = cowboy:start_http(http, 100, [{port, Port}], [{env, [{dispatch, dispatch_rules()}]}]),
+    {ok, {{one_for_one, 5, 10}, []}}.
+
+dispatch_rules() ->
+    %% {Host, list({Path, Handler, Opts})}
+    [{'_', [
+	    {[<<"css">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/css">>]}}]},
+	    {[<<"images">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/images">>]}}]},
+	    {[<<"nitrogen">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/nitrogen">>]}}]},
+	    {[<<"jqgrid">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/jqgrid">>]}}]},
+	    {[<<"content">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"content">>]}}]},
+	    {[<<"history">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/history">>]}}]},
+	    {'_', nitrogen_cowboy, []}
+	   ]
+     }].
