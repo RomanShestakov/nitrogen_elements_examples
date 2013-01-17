@@ -4,14 +4,16 @@
 
 -module(get_jqgrid_data).
 
--export([init/1, content_types_provided/2, to_json/2, generate_etag/2]).
+-export([init/3, content_types_provided/2, to_json/2, generate_etag/2, terminate/2]).
 
--include_lib("webmachine/include/webmachine.hrl").
+%% -include_lib("webmachine/include/webmachine.hrl").
 
-init([]) -> {ok, undefined}.
+%% init([]) -> {ok, undefined}.
+init(_Transport, _Req, []) ->
+    {upgrade, protocol, cowboy_rest}.
 
 content_types_provided(ReqData, Context) ->
-    {[{"application/json", to_json}], ReqData, Context}.
+    {[{<<"application/json">>, to_json}], ReqData, Context}.
 
 to_json(ReqData, Context) ->
     Data = {struct, [{<<"total">>, 1},
@@ -25,3 +27,6 @@ to_json(ReqData, Context) ->
     {Data1, ReqData, Context}.
 
 generate_etag(ReqData, Context) -> {wrq:raw_path(ReqData), ReqData, Context}.
+
+terminate(_Req, _State) ->
+    ok.

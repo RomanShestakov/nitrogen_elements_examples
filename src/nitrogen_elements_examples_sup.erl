@@ -14,6 +14,8 @@
 -include_lib("webmachine/include/webmachine.hrl").
 -include_lib ("nitrogen_core/include/wf.hrl").
 
+-define(APP, nitrogen_elements_examples).
+
 %% ===================================================================
 %% API functions
 %% ===================================================================
@@ -33,19 +35,25 @@ init([]) ->
     DocRootBin = wf:to_binary(DocRoot),
 
     io:format("Starting Cowboy Server (~s) on ~s:~p, root: '~s'~n", [ServerName, BindAddress, Port, DocRoot]),
-
-    {ok, _} = cowboy:start_http(http, 100, [{port, Port}], [{env, [{dispatch, dispatch_rules()}]}]),
+    HttpOpts = [{max_keepalive, 50}, {dispatch, dispatch_rules(DocRootBin)}],
+    cowboy:start_listener(http, 100,
+                          cowboy_tcp_transport, [{port, Port}],
+                          cowboy_http_protocol, HttpOpts),
     {ok, {{one_for_one, 5, 10}, []}}.
 
-dispatch_rules() ->
+dispatch_rules(DocRootBin) ->
     %% {Host, list({Path, Handler, Opts})}
     [{'_', [
-	    {[<<"css">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/css">>]}}]},
-	    {[<<"images">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/images">>]}}]},
-	    {[<<"nitrogen">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/nitrogen">>]}}]},
-	    {[<<"jqgrid">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/jqgrid">>]}}]},
-	    {[<<"content">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"content">>]}}]},
-	    {[<<"history">>, '...'], cowboy_static, [{directory, {priv_dir, nitrogen_elements_examples, [<<"static/history">>]}}]},
+	    {[<<"css/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/css">>)]},
+	    {[<<"images/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/images">>)]},
+	    {[<<"nitrogen/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/nitrogen">>)]},
+	    {[<<"jqgrid/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/jqgrid">>)]},
+	    {[<<"content/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/content">>)]},
+	    {[<<"history/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/history">>)]},
+	    {[<<"get_jqgrid_data">>, '...'], get_jqgrid_data, []},
 	    {'_', nitrogen_cowboy, []}
 	   ]
      }].
+
+get_path(DocRootBin, Path) ->
+    {directory, filename:join([DocRootBin, Path])}.

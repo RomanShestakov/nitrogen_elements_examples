@@ -17,9 +17,6 @@ init(_Transport, Req, []) ->
 handle(Req, State) ->
     {ok, DocRoot} = application:get_env(nitrogen_elements_examples, document_root),
     RequestBridge = simple_bridge:make_request(cowboy_request_bridge, {Req, DocRoot}),
-
-    io:format("req bridge: ~p ~p ~n", [Req, DocRoot]),
-
     %% Becaue Cowboy usese the same "Req" record, we can pass the
     %% previously made RequestBridge to make_response, and it'll
     %% parse out the relevant bits to keep both parts (request and
