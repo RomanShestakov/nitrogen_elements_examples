@@ -4,16 +4,16 @@
 
 -module(get_jqgrid_data).
 
--export([init/3, content_types_provided/2, to_json/2, generate_etag/2, terminate/2]).
+-export([init/3, allowed_methods/2, content_types_provided/2, to_json/2]).
 
-%% -include_lib("webmachine/include/webmachine.hrl").
-
-%% init([]) -> {ok, undefined}.
 init(_Transport, _Req, []) ->
-    {upgrade, protocol, cowboy_rest}.
+    {upgrade, protocol, cowboy_http_rest}.
 
-content_types_provided(ReqData, Context) ->
-    {[{<<"application/json">>, to_json}], ReqData, Context}.
+allowed_methods(ReqData, Context) ->
+    {['HEAD', 'GET', 'PUT', 'POST', 'DELETE'], ReqData, Context}.
+
+content_types_provided(Req, State) ->
+    {[{{<<"application">>, <<"json">>, []}, to_json}], Req, State}.
 
 to_json(ReqData, Context) ->
     Data = {struct, [{<<"total">>, 1},
@@ -25,8 +25,3 @@ to_json(ReqData, Context) ->
 		    ]},
     Data1 = iolist_to_binary(mochijson2:encode(Data)),
     {Data1, ReqData, Context}.
-
-generate_etag(ReqData, Context) -> {wrq:raw_path(ReqData), ReqData, Context}.
-
-terminate(_Req, _State) ->
-    ok.
