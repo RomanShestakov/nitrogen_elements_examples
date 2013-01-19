@@ -14,7 +14,7 @@ body() ->
     %% bind to tabs 'tabsactive' event
     wf:wire(tabs, #tab_event_on{type = ?EVENT_TABSACTIVATE, postback = {tabs, ?EVENT_TABSACTIVATE}}),
     %% wire tabs_select to show how to change tab after tabs control was initialized
-    wf:wire(tabs, #event{type = 'tabscreate', actions = [#tab_select{target = tabs, tab = 2}]}),
+    wf:wire(tabs, #event{type = ?EVENT_TABSCREATE, actions = [#tab_select{target = tabs, tab = 2}]}),
     %% wire api_event, this will create javascript function 'page.history_back'
     wf:wire(#api{name = history_back, tag = f1}),
     %% output html markup
