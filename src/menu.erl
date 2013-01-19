@@ -17,6 +17,7 @@ body() ->
 	#menu{
 	    id = menu,
 	    options = [],
+	    style = "width:150px;",
 	    items = [
 		#item{title = "USA", items = [#item{title = "New York City"}, #item{title = "Boston"}]},
 		#item{title = "UK"},

@@ -9,3 +9,4 @@ logs
 /doc/*
 /priv/static/*
 !/priv/static/css
+!/priv/static/content
