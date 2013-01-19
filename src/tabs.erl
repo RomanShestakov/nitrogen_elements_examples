@@ -11,20 +11,21 @@ title() -> "Tabs Pane Example".
 headline() -> "Tabs Pane Example".
 
 body() ->
-    %% bind to tabs 'tabsshow' event
+    %% bind to tabs 'tabsactive' event
     wf:wire(tabs, #tab_event_on{type = ?EVENT_TABSACTIVATE, postback = {tabs, ?EVENT_TABSACTIVATE}}),
-
     %% wire tabs_select to show how to change tab after tabs control was initialized
-    %% wf:wire(tabs, #tab_select{tab = 1}),
-    wf:wire(#api{name=history_back, tag=f1}),
+    wf:wire(tabs, #event{type = 'tabscreate', actions = [#tab_select{target = tabs, tab = 2}]}),
+    %% wire api_event, this will create javascript function 'page.history_back'
+    wf:wire(#api{name = history_back, tag = f1}),
+    %% output html markup
     [
 	#tabs{
 	    id = tabs,
-	    options=[{selected, 0}],
-	    tabs=[
-		#tab{title="Tab 1", url = "/content/tabs2.htm"},
-		#tab{title="Tab 2", body=["Tab two body..."]},
-		#tab{title="Tab 3", body=["Tab three body..."]}
+	    options = [{selected, 0}],
+	    tabs = [
+		#tab{title = "Tab 1", url = "/content/tabs2.htm"},
+		#tab{title = "Tab 2", body = ["Tab two body..."]},
+		#tab{title = "Tab 3", body = ["Tab three body..."]}
 	    ]
 	}
 ].
