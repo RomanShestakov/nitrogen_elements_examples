@@ -38,7 +38,7 @@ event({ID, ?EVENT_TABSACTIVATE}) ->
 api_event(history_back, _B, [[_,{data, Data}]]) ->
     ?PRINT({history_back_event, _B, Data}),
     TabIndex = proplists:get_value(tabindex, Data),
-    wf:wire(tabs, #tab_event_off{event = ?EVENT_TABSACTIVATE}),
+    wf:wire(tabs, #tab_event_off{type = ?EVENT_TABSACTIVATE}),
     wf:wire(tabs, #tab_select{tab = TabIndex}),
     wf:wire(tabs, #tab_event_on{type = ?EVENT_TABSACTIVATE});
 api_event(A, B, C) ->
