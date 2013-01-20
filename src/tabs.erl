@@ -34,7 +34,13 @@ body() ->
      #button{id=btn_disable1, text="Disable Some tabs", actions=[#event{type=click, postback=disable_some_tabs}]},
      #p{},
      #button{id=btn_select, text="Select tab", actions=[#event{type=click, postback=select_tab}]},
-     #textbox{id=tbx_tab_index, text="0"}
+     #textbox{id=tbx_tab_index, text="0"},
+     #p{},
+     #button{id=btn_remove, text="Remove tab", actions=[#event{type=click, postback=remove_tab}]},
+     #textbox{id=tbx_tab_remove_index, text="0"}
+     %% #button{text="Get tab options", actions=[#event{type=click,
+     %% 						     actions = [#tab_option{target = tabs, key = disabled}]}]},
+     %% #flash {}
 ].
 
 event({ID, ?EVENT_TABSACTIVATE}) ->
@@ -59,7 +65,14 @@ event(enable_some_tabs) ->
        #button{id=btn_disable1, text="Disable Some tabs", actions=[#event{type=click, postback=disable_some_tabs}]});
 event(select_tab) ->
     Index = wf:q(tbx_tab_index),
-    wf:wire(#tab_select{target=tabs, tab = wf:to_integer(Index)}).
+    wf:wire(#tab_select{target=tabs, tab = wf:to_integer(Index)});
+event(remove_tab) ->
+    Index = wf:q(tbx_tab_remove_index),
+    wf:wire(#tab_remove{target=tabs, tab = wf:to_integer(Index)});
+event(option) ->
+    Option = wf:q(option),
+    wf:flash(wf:f("Option: ~s", [Option])),
+    ok.
 
 api_event(history_back, _B, [[_,{data, Data}]]) ->
     ?PRINT({history_back_event, _B, Data}),
