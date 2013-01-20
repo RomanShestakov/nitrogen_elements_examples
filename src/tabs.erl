@@ -30,16 +30,18 @@ body() ->
 	},
      %% add button to disable tabs
      #button{id=btn_disable, text="Disable All tabs", actions=[#event{type=click, postback=disable_tabs}]},
-     #button{id=btn_disable1, text="Disable Some tabs", actions=[#event{type=click, postback=disable_some_tabs}]}
-
+     #p{},
+     #button{id=btn_disable1, text="Disable Some tabs", actions=[#event{type=click, postback=disable_some_tabs}]},
+     #p{},
+     #button{id=btn_select, text="Select tab", actions=[#event{type=click, postback=select_tab}]},
+     #textbox{id=tbx_tab_index, text="0"}
 ].
 
 event({ID, ?EVENT_TABSACTIVATE}) ->
-    ?PRINT({tabs_event, ?EVENT_TABSACTIVATE}),
+    %% ?PRINT({tabs_event, ?EVENT_TABSACTIVATE}),
     wf:wire(wf:f("(function(){var index = jQuery(obj('~s')).tabs(\"option\", \"active\");
                      pushState(\"State\"+index, \"?state=\"+index, {tabindex:index});})();", [ID]));
 event(disable_tabs) ->
-    %% wf:wire(#tab_destroy{target=tabs}),
     wf:wire(#tab_disable{target=tabs}),
     wf:replace(btn_disable,
        #button{id=btn_enable, text="Enable All tabs", actions=[#event{type=click, postback=enable_tabs}]});
@@ -48,16 +50,16 @@ event(enable_tabs) ->
     wf:replace(btn_enable,
        #button{id=btn_disable, text="Disable All tabs", actions=[#event{type=click, postback=disable_tabs}]});
 event(disable_some_tabs) ->
-    %% ?PRINT({tabs_event, disable_some_tabs}),
-    W = wf:f("jQuery(obj('~s')).tabs(\"option\", \"disabled\", ~w);", [tabs, [1, 2]]),
-    ?PRINT({tabs_event, W}),
     wf:wire(#tab_disable{target=tabs, tab = [1, 2]}),
     wf:replace(btn_disable1,
        #button{id=btn_enable1, text="Enable All tabs", actions=[#event{type=click, postback=enable_some_tabs}]});
 event(enable_some_tabs) ->
     wf:wire(#tab_enable{target=tabs, tab = [1, 2]}),
     wf:replace(btn_enable1,
-       #button{id=btn_disable1, text="Disable Some tabs", actions=[#event{type=click, postback=disable_some_tabs}]}).
+       #button{id=btn_disable1, text="Disable Some tabs", actions=[#event{type=click, postback=disable_some_tabs}]});
+event(select_tab) ->
+    Index = wf:q(tbx_tab_index),
+    wf:wire(#tab_select{target=tabs, tab = wf:to_integer(Index)}).
 
 api_event(history_back, _B, [[_,{data, Data}]]) ->
     ?PRINT({history_back_event, _B, Data}),
