@@ -11,10 +11,16 @@ title() -> "Tabs Pane Example".
 headline() -> "Tabs Pane Example".
 
 body() ->
-    %% bind to tabs 'tabsactive' event
-    wf:wire(tabs, #tab_event_on{type = ?EVENT_TABSACTIVATE, postback = {tabs, ?EVENT_TABSACTIVATE}}),
+
+    %% bind to tabs events
+    wf:wire(tabs, #tab_event_on{type = ?EVENT_TABS_ACTIVATE, postback = {tabs, ?EVENT_TABS_ACTIVATE}}),
+    wf:wire(tabs, #tab_event_on{type = ?EVENT_TABS_BEFORE_ACTIVATE, postback = {tabs, ?EVENT_TABS_BEFORE_ACTIVATE}}),
+    wf:wire(tabs, #tab_event_on{type = ?EVENT_TABS_BEFORE_LOAD, postback = {tabs, ?EVENT_TABS_BEFORE_LOAD}}),
+    wf:wire(tabs, #tab_event_on{type = ?EVENT_TABS_CREATE, postback = {tabs, ?EVENT_TABS_CREATE}}),
+    wf:wire(tabs, #tab_event_on{type = ?EVENT_TABS_LOAD, postback = {tabs, ?EVENT_TABS_LOAD}}),
+
     %% wire tabs_select to show how to change tab after tabs control was initialized
-    wf:wire(tabs, #event{type = ?EVENT_TABSCREATE, actions = [#tab_select{target = tabs, tab = 1}]}),
+    wf:wire(tabs, #event{type = ?EVENT_TABS_CREATE, actions = [#tab_select{target = tabs, tab = 1}]}),
     %% wire api_event, this will create javascript function 'page.history_back'
     wf:wire(#api{name = history_back, tag = f1}),
     %% output html markup
@@ -46,10 +52,17 @@ body() ->
      %% #flash {}
 ].
 
-event({ID, ?EVENT_TABSACTIVATE}) ->
-    %% ?PRINT({tabs_event, ?EVENT_TABSACTIVATE}),
+event({ID, ?EVENT_TABS_ACTIVATE}) ->
     wf:wire(wf:f("(function(){var index = jQuery(obj('~s')).tabs(\"option\", \"active\");
                      pushState(\"State\"+index, \"?state=\"+index, {tabindex:index});})();", [ID]));
+event({ID, ?EVENT_TABS_BEFORE_ACTIVATE}) ->
+    ?PRINT({tabs_event, ?EVENT_TABS_BEFORE_ACTIVATE});
+event({ID, ?EVENT_TABS_BEFORE_LOAD}) ->
+    ?PRINT({tabs_event, ?EVENT_TABS_BEFORE_LOAD});
+event({ID, ?EVENT_TABS_CREATE}) ->
+    ?PRINT({tabs_event, ?EVENT_TABS_CREATE});
+event({ID, ?EVENT_TABS_LOAD}) ->
+    ?PRINT({tabs_event, ?EVENT_TABS_LOAD});
 event(disable_tabs) ->
     wf:wire(#tab_disable{target=tabs}),
     wf:replace(btn_disable,
@@ -84,9 +97,9 @@ event(add_tab) ->
 api_event(history_back, _B, [[_,{data, Data}]]) ->
     ?PRINT({history_back_event, _B, Data}),
     TabIndex = proplists:get_value(tabindex, Data),
-    wf:wire(tabs, #tab_event_off{type = ?EVENT_TABSACTIVATE}),
+    wf:wire(tabs, #tab_event_off{type = ?EVENT_TABS_ACTIVATE}),
     wf:wire(tabs, #tab_select{tab = TabIndex}),
-    wf:wire(tabs, #tab_event_on{type = ?EVENT_TABSACTIVATE});
+    wf:wire(tabs, #tab_event_on{type = ?EVENT_TABS_ACTIVATE});
 api_event(A, B, C) ->
     ?PRINT(A), ?PRINT(B), ?PRINT(C).
 
