@@ -46,22 +46,22 @@ body() ->
      #textbox{id=tbx_tab_remove_index, text="0"},
      #p{},
      #button{id=btn_add, text="Add tab", actions=[#event{type=click, postback=add_tab}]},
-     #textbox{id=tbx_add_tab, text="NewTab"}
-     %% #button{text="Get tab options", actions=[#event{type=click,
-     %% 						     actions = [#tab_option{target = tabs, key = disabled}]}]},
-     %% #flash {}
+     #textbox{id=tbx_add_tab, text="NewTab"},
+     #p{},
+     #button{text="Get tab options", actions=[#event{type=click, actions=[#tab_option{target=tabs, key=disabled}]}]},
+     #flash {}
 ].
 
 event({ID, ?EVENT_TABS_ACTIVATE}) ->
     wf:wire(wf:f("(function(){var index = jQuery(obj('~s')).tabs(\"option\", \"active\");
                      pushState(\"State\"+index, \"?state=\"+index, {tabindex:index});})();", [ID]));
-event({ID, ?EVENT_TABS_BEFORE_ACTIVATE}) ->
+event({_ID, ?EVENT_TABS_BEFORE_ACTIVATE}) ->
     ?PRINT({tabs_event, ?EVENT_TABS_BEFORE_ACTIVATE});
-event({ID, ?EVENT_TABS_BEFORE_LOAD}) ->
+event({_ID, ?EVENT_TABS_BEFORE_LOAD}) ->
     ?PRINT({tabs_event, ?EVENT_TABS_BEFORE_LOAD});
-event({ID, ?EVENT_TABS_CREATE}) ->
+event({_ID, ?EVENT_TABS_CREATE}) ->
     ?PRINT({tabs_event, ?EVENT_TABS_CREATE});
-event({ID, ?EVENT_TABS_LOAD}) ->
+event({_ID, ?EVENT_TABS_LOAD}) ->
     ?PRINT({tabs_event, ?EVENT_TABS_LOAD});
 event(disable_tabs) ->
     wf:wire(#tab_disable{target=tabs}),
@@ -87,12 +87,12 @@ event(remove_tab) ->
     wf:wire(#tab_remove{target = tabs, tab = wf:to_integer(Index)});
 event(add_tab) ->
     Title = wf:q(tbx_add_tab),
-    wf:wire(#tab_add{target = tabs, title = Title, url = "/content/tabs2.htm"}).
-
-%% event(option) ->
-%%     Option = wf:q(option),
-%%     wf:flash(wf:f("Option: ~s", [Option])),
-%%     ok.
+    wf:wire(#tab_add{target = tabs, title = Title, url = "/content/tabs2.htm"});
+event({option, Key}) ->
+    Option = wf:q(Key),
+    ?PRINT({options_event, Key, Option}),
+    wf:flash(wf:f("~s: ~s", [Key, Option])),
+    ok.
 
 api_event(history_back, _B, [[_,{data, Data}]]) ->
     ?PRINT({history_back_event, _B, Data}),
