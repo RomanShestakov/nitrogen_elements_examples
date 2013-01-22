@@ -48,7 +48,18 @@ body() ->
      #button{id=btn_add, text="Add tab", actions=[#event{type=click, postback=add_tab}]},
      #textbox{id=tbx_add_tab, text="NewTab"},
      #p{},
-     #button{text="Get tab options", actions=[#event{type=click, actions=[#tab_option{target=tabs, key=disabled}]}]},
+     #label{text="Options: "},
+     #dropdown{id=dropdown,
+     	       options=[
+     			#option { text=active },
+     			#option { text=collapsible },
+     			#option { text=disabled },
+     			#option { text=event },
+     			#option { text=heightStyle },
+     			#option { text=hide },
+     			#option { text=show }
+     		       ]},
+     #button{text="Get tab options", actions=[#event{type=click, postback=select_option}]},
      #flash {}
 ].
 
@@ -88,9 +99,11 @@ event(remove_tab) ->
 event(add_tab) ->
     Title = wf:q(tbx_add_tab),
     wf:wire(#tab_add{target = tabs, title = Title, url = "/content/tabs2.htm"});
+event(select_option) ->
+    Option = wf:q(dropdown),
+    wf:wire(#tab_option{target=tabs, key=list_to_atom(Option)});
 event({option, Key}) ->
     Option = wf:q(Key),
-    ?PRINT({options_event, Key, Option}),
     wf:flash(wf:f("~s: ~s", [Key, Option])),
     ok.
 
