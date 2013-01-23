@@ -109,8 +109,15 @@ event({option, Key}) ->
     Option = wf:q(Key),
     wf:flash(wf:f("~s: ~s", [Key, Option]));
 event(options) ->
-    Options = wf:q(options),
-    wf:flash(wf:f("~s", [Options])).
+    Active=wf:q(active),
+    Collapsible=wf:q(collapsible),
+    Disabled=wf:q(disabled),
+    Event=wf:q(event),
+    HeightStyle=wf:q(heightStyle),
+    Hide=wf:q(hide),
+    Show=wf:q(show),
+    wf:flash(wf:f("Active:~s, Collapsible:~s, Disabled:~s, Event:~s, HeightStyle:~s, Hide:~s, Show:~s",
+		  [Active, Collapsible, Disabled, Event, HeightStyle, Hide, Show])).
 
 api_event(history_back, _B, [[_,{data, Data}]]) ->
     ?PRINT({history_back_event, _B, Data}),
