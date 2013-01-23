@@ -16,16 +16,17 @@ headline() -> "Nitrogen Elements Examples".
 
 body() -> [
     #panel{
-	body = [
-	    #list{
-		body = [
-		    #listitem{body = #link{url = "action_dialog_example", body = "Action Dialog"}},
-		    #listitem{body = #link{url = "tabs", body = "Tabs"}},
-		    #listitem{body = #link{url = "menu", body = "Menu"}},
-		    #listitem{body = #link{url = "grid", body = "Grid"}},
-		    #listitem{body = #link{url = "progressbar", body = "Progressbar"}}
-		]
-	    }
-	]
+    	body = [
+    	    #menu{
+		id = elements_menu,
+    		body = [
+    		    #item{url = "action_dialog_example", title = "Action Dialog"},
+    		    #item{url = "tabs", title = "Tabs"},
+    		    #item{url = "menu", title = "Menu"},
+    		    #item{url = "grid", title = "Grid"},
+    		    #item{url = "progressbar", title = "Progressbar"}
+    		]
+    	    }
+    	]
     }
 ].

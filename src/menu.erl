@@ -13,15 +13,26 @@ title() -> "Menu Example".
 headline() -> "Menu Example".
 
 body() ->
+
+    %% bind to menu events
+    wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_CREATE, postback = {menu, ?EVENT_MENU_CREATE}}),
+    wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_FOCUS, postback = {menu, ?EVENT_MENU_FOCUS}}),
+
+    %% output html markup
     [
 	#menu{
 	    id = menu,
 	    options = [],
 	    style = "width:150px;",
-	    items = [
-		#item{title = "USA", items = [#item{title = "New York City"}, #item{title = "Boston"}]},
+	    body = [
+		#item{title = "USA", body = [#item{title = "New York City"}, #item{title = "Boston"}]},
 		#item{title = "UK"},
 		#item{title = "Russia"}
 	    ]
 	}
-].
+    ].
+
+event({ID, ?EVENT_MENU_CREATE}) ->
+    ?PRINT({menu_event, ?EVENT_MENU_CREATE});
+event({ID, ?EVENT_MENU_FOCUS}) ->
+    ?PRINT({menu_event, ?EVENT_MENU_FOCUS}).
