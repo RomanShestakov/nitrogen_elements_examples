@@ -59,7 +59,8 @@ body() ->
      			#option { text=hide },
      			#option { text=show }
      		       ]},
-     #button{text="Get tab options", actions=[#event{type=click, postback=select_option}]},
+     #button{text="Get option", actions=[#event{type=click, postback=select_option}]},
+     #button{text="Get options", actions=[#event{type=click, postback=select_options}]},
      #flash {}
 ].
 
@@ -102,10 +103,14 @@ event(add_tab) ->
 event(select_option) ->
     Option = wf:q(dropdown),
     wf:wire(#tab_option{target=tabs, key=list_to_atom(Option)});
+event(select_options) ->
+    wf:wire(#tab_option{target=tabs});
 event({option, Key}) ->
     Option = wf:q(Key),
-    wf:flash(wf:f("~s: ~s", [Key, Option])),
-    ok.
+    wf:flash(wf:f("~s: ~s", [Key, Option]));
+event(options) ->
+    Options = wf:q(options),
+    wf:flash(wf:f("~s", [Options])).
 
 api_event(history_back, _B, [[_,{data, Data}]]) ->
     ?PRINT({history_back_event, _B, Data}),
