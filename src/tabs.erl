@@ -12,6 +12,14 @@ headline() -> "Tabs Pane Example".
 
 body() ->
 
+    %% if page was bookmarked and requested by
+    Index = case wf:q(state) of
+	undefined -> 0;
+	Tab -> list_to_integer(Tab)
+    end,
+
+    ?PRINT({selected_index, Index}),
+
     %% bind to tabs events
     wf:wire(tabs, #tab_event_on{type = ?EVENT_TABS_ACTIVATE, postback = {tabs, ?EVENT_TABS_ACTIVATE}}),
     wf:wire(tabs, #tab_event_on{type = ?EVENT_TABS_BEFORE_ACTIVATE, postback = {tabs, ?EVENT_TABS_BEFORE_ACTIVATE}}),
@@ -20,7 +28,7 @@ body() ->
     wf:wire(tabs, #tab_event_on{type = ?EVENT_TABS_LOAD, postback = {tabs, ?EVENT_TABS_LOAD}}),
 
     %% wire tabs_select to show how to change tab after tabs control was initialized
-    wf:wire(tabs, #event{type = ?EVENT_TABS_CREATE, actions = [#tab_select{target = tabs, tab = 1}]}),
+    wf:wire(tabs, #event{type = ?EVENT_TABS_CREATE, actions = [#tab_select{target = tabs, tab = Index}]}),
     %% wire api_event, this will create javascript function 'page.history_back'
     wf:wire(#api{name = history_back, tag = f1}),
     %% output html markup
