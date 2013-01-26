@@ -71,6 +71,7 @@ event({menu_example_tag, Event}) ->
 event({dialog_example_tag, Event}) ->
     dialog:event(Event);
 event({progressbar_example_tag, Event}) ->
+    ?PRINT({progressbar_event, Event}),
     progressbar:event(Event);
 event(Event) ->
     ?PRINT({event, Event}).
