@@ -7,16 +7,15 @@
 -include_lib("nitrogen_elements/include/nitrogen_elements.hrl").
 -compile(export_all).
 
-main() -> #template{file=filename:join([web_common:templates(), "onecolumn.html"])}.
+%% main() -> #template{file=filename:join([web_common:templates(), "onecolumn.html"])}.
 
-title() -> "Menu Example".
-headline() -> "Menu Example".
+%% title() -> "Menu Example".
+%% headline() -> "Menu Example".
 
-body() ->
-
+body(Tag) ->
     %% bind to menu events
-    wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_CREATE, postback = {menu, ?EVENT_MENU_CREATE}}),
-    wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_FOCUS, postback = {menu, ?EVENT_MENU_FOCUS}}),
+    wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_CREATE, postback = {Tag, {menu, ?EVENT_MENU_CREATE}}}),
+    wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_FOCUS, postback = {Tag, {menu, ?EVENT_MENU_FOCUS}}}),
 
     %% output html markup
     [
@@ -35,4 +34,6 @@ body() ->
 event({ID, ?EVENT_MENU_CREATE}) ->
     ?PRINT({menu_event, ?EVENT_MENU_CREATE});
 event({ID, ?EVENT_MENU_FOCUS}) ->
-    ?PRINT({menu_event, ?EVENT_MENU_FOCUS}).
+    ?PRINT({menu_event, ?EVENT_MENU_FOCUS});
+event(Event) ->
+    ?PRINT({menu_event, Event}).
