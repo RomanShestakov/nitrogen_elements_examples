@@ -54,25 +54,23 @@ menubar() -> [
 }].
 
 event(action_dialog_example) ->
-    %% ?PRINT({tabsevent, action}),
      wf:update(center, #panel{id = center, body = [dialog:body()]});
 event(tabs) ->
-    %% ?PRINT({tabsevent, tabs});
     wf:update(center, #panel{id = center, body = [tabs:body(tabs_example_tag)]});
 event(menu) ->
-    ?PRINT({tabsevent, manu});
-
-    %% wf:update(display_pnl, #panel{id = display_pnl, body = [menu:body(menu_example_tag)]});
+    wf:update(center, #panel{id = center, body = [menu:body(menu_example_tag)]});
 event(grid) ->
-    ?PRINT({tabsevent, grid});
-    %% wf:update(display_pnl, #panel{id = display_pnl, body = [ #label{ text = "grid" }]});
+    wf:update(center, #panel{id = center, body = [grid:body()]});
 event(progressbar) ->
-    ?PRINT({tabsevent, progressbar}).
-    %% wf:update(display_pnl, #panel{id = display_pnl, body = [ #label{ text = "progressbar" }]}).
+    wf:update(center, #panel{id = center, body = [progressbar:body(progressbar_example_tag)]});
 
 event({tabs_example_tag, Event}) ->
-    ?PRINT({tabs_event_tag, Event}),
     tabs:event(Event);
 event({menu_example_tag, Event}) ->
-    ?PRINT({menu_event_tag, Event}),
-    menu:event(Event).
+    menu:event(Event);
+event({dialog_example_tag, Event}) ->
+    dialog:event(Event);
+event({progressbar_example_tag, Event}) ->
+    progressbar:event(Event);
+event(Event) ->
+    ?PRINT({event, Event}).

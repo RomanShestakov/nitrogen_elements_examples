@@ -9,13 +9,7 @@
 -include_lib("nitrogen_elements/include/nitrogen_elements.hrl").
 -compile(export_all).
 
-main() -> #template{file=filename:join([web_common:templates(), "onecolumn.html"])}.
-
-title() -> "Progressbar Example".
-headline() -> "Progressbar Example".
-
-body() ->
-
+body(Tag) ->
     %% wire event with action
     wf:wire(password, #event{type=keyup, trigger = password,
 	actions = [wf:f("$(function(){var len = jQuery(obj('~s')).val().length;
@@ -23,11 +17,11 @@ body() ->
                                       })", [password, progressbar])]}),
 
     %% wire event with postback
-    wf:wire(password_1, #event{type = keyup, postback = {password_1, keyup}}),
+    wf:wire(password_1, #event{type = keyup, postback = {Tag, {password_1, keyup}}}),
 
     %% wire event for progressbarcomplete and progressbarchange
-    wf:wire(progressbar_1, #progressbar_event_on{event = progressbarcomplete, postback = {progressbar_1, complete}}),
-    wf:wire(progressbar_1, #progressbar_event_on{event = progressbarchange, postback = {progressbar_1, changed}}),
+    wf:wire(progressbar_1, #progressbar_event_on{event = progressbarcomplete, postback = {Tag, {progressbar_1, complete}}}),
+    wf:wire(progressbar_1, #progressbar_event_on{event = progressbarchange, postback = {Tag, {progressbar_1, changed}}}),
 
     %% output html markup
     [
