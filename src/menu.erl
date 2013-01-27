@@ -8,15 +8,18 @@
 -compile(export_all).
 
 body(Tag) ->
-    %% bind to menu events
-    wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_CREATE, postback = {Tag, {menu, ?EVENT_MENU_CREATE}}}),
+    %% %% bind to menu events
+    %% wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_CREATE, postback = {Tag, {menu, ?EVENT_MENU_CREATE}}}),
     wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_FOCUS, postback = {Tag, {menu, ?EVENT_MENU_FOCUS}}}),
 
     %% output html markup
     [
 	#menu{
 	    id = menu,
-	    options = [],
+	    options = [ %%{disabled, true},
+		{icons, {{submenu, <<"ui-icon-circle-triangle-e">>}}},
+		{position, {{my, <<"left top">>}, {at, <<"right top">>}}}
+	    ],
 	    style = "width:150px;",
 	    body = [
 		#item{title = "USA", body = [#item{title = "New York City"}, #item{title = "Boston"}]},
@@ -26,7 +29,7 @@ body(Tag) ->
 	}
     ].
 
-event({ID, ?EVENT_MENU_CREATE}) ->
+event({_ID, ?EVENT_MENU_CREATE}) ->
     ?PRINT({menu_event, ?EVENT_MENU_CREATE});
 event({ID, ?EVENT_MENU_FOCUS}) ->
     ?PRINT({menu_event, ?EVENT_MENU_FOCUS});
