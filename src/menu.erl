@@ -8,9 +8,6 @@
 -compile(export_all).
 
 body(Tag) ->
-    %% %% bind to menu events
-    %% wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_CREATE, postback = {Tag, {menu, ?EVENT_MENU_CREATE}}}),
-    wf:wire(menu, #menu_event_on{type = ?EVENT_MENU_FOCUS, postback = {Tag, {menu, ?EVENT_MENU_FOCUS}}}),
 
     %% output html markup
     [
@@ -25,7 +22,11 @@ body(Tag) ->
 		#item{title = "USA", body = [#item{title = "New York City"}, #item{title = "Boston"}]},
 		#item{title = "UK"},
 		#item{title = "Russia"}
-	    ]
+	    ],
+	   %% add actions which bind native menu events
+	   actions = [ #menu_event_on{trigger = menu, type = ?EVENT_MENU_CREATE, postback = {Tag, {menu, ?EVENT_MENU_CREATE}}},
+		       #menu_event_on{trigger = menu, type = ?EVENT_MENU_FOCUS, postback = {Tag, {menu, ?EVENT_MENU_FOCUS}}}
+		     ]
 	}
     ].
 

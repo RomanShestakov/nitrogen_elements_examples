@@ -54,7 +54,7 @@ menubar() -> [
 }].
 
 event(action_dialog_example) ->
-     wf:update(center, #panel{id = center, body = [dialog:body()]});
+    wf:update(center, #panel{id = center, body = [dialog:body()]});
 event(tabs) ->
     wf:update(center, #panel{id = center, body = [tabs:body(tabs_example_tag)]});
 event(menu) ->
