@@ -63,7 +63,6 @@ event(grid) ->
     wf:update(center, #panel{id = center, body = [grid:body()]});
 event(progressbar) ->
     wf:update(center, #panel{id = center, body = [progressbar:body(progressbar_example_tag)]});
-
 event({tabs_example_tag, Event}) ->
     tabs:event(Event);
 event({menu_example_tag, Event}) ->
@@ -75,3 +74,6 @@ event({progressbar_example_tag, Event}) ->
     progressbar:event(Event);
 event(Event) ->
     ?PRINT({event, Event}).
+
+api_event(history_back, tabs_example_tag, Data) ->
+    tabs:api_event(history_back, tabs_example_tag, Data).
