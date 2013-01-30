@@ -46,6 +46,7 @@ menubar() -> [
 	],
 	body = [
 	    #item{postback = action_dialog_example, title = "Action Dialog"},
+	    #item{postback = accordion, title = "Accordion"},
 	    #item{postback = tabs, title = "Tabs"},
 	    #item{postback = menu, title = "Menu"},
 	    #item{postback = grid, title = "Grid"},
@@ -55,6 +56,8 @@ menubar() -> [
 
 event(action_dialog_example) ->
     wf:update(center, #panel{id = center, body = [dialog:body()]});
+event(accordion) ->
+    wf:update(center, #panel{id = center, body = [accordion:body(accordion_example_tag)]});
 event(tabs) ->
     wf:update(center, #panel{id = center, body = [tabs:body(tabs_example_tag)]});
 event(menu) ->
