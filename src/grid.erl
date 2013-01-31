@@ -36,11 +36,11 @@ body() ->
 	}
     ].
 
-jqgrid_event(?ONSELECTROW, RowId, Status) ->
+event(?ONSELECTROW, RowId, Status) ->
     %% wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
     ?PRINT({jqgrid_event, ?ONSELECTROW, RowId, Status}).
 
-jqgrid_event(EventType, Id) ->
+event(EventType, Id) ->
     %% wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
     ?PRINT({jqgrid_event, EventType, Id}).
 

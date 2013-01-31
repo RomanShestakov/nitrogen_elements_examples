@@ -78,5 +78,9 @@ event({progressbar_example_tag, Event}) ->
 event(Event) ->
     ?PRINT({event, Event}).
 
+event(EventType, RowId, Status) ->
+    grid:event(EventType, RowId, Status).
+
 api_event(history_back, tabs_example_tag, Data) ->
     tabs:api_event(history_back, tabs_example_tag, Data).
+
