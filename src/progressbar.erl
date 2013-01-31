@@ -10,11 +10,7 @@
 -compile(export_all).
 
 body(Tag) ->
-    %% wire event with postback
-    %% wf:wire(password_1, #event{type = keyup, postback = {Tag, {password_1, keyup}}}),
-    %% %% wire event for progressbarcomplete and progressbarchange
-    %% wf:wire(progressbar_1, #progressbar_event_on{event = progressbarcomplete, postback = {Tag, {progressbar_1, complete}}}),
-    %% wf:wire(progressbar_1, #progressbar_event_on{event = progressbarchange, postback = {Tag, {progressbar_1, changed}}}),
+
     Actions = #event{type=keyup, trigger = password,
 		     actions = [wf:f("$(function(){var len = jQuery(obj('~s')).val().length;
                                       jQuery(obj('~s')).progressbar({value : len * 10});
@@ -40,14 +36,10 @@ body(Tag) ->
 	]}
     ].
 
-event({ID, keyup}) ->
+event({_ID, keyup}) ->
     %% get current values from password box with id = password_1
     Len = length(wf:q(password_1)),
     ?PRINT({password_length, Len}),
     wf:wire(progressbar_1, #progressbar_value{value = Len * 10});
-%% event({ID, complete}) ->
-%%     ?PRINT({progressbarcomplete, ID});
-%% event({ID, changed}) ->
-%%     ?PRINT({progressbarchange, ID});
 event(Event) ->
     ?PRINT({Event}).
