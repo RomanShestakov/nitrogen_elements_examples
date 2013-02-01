@@ -7,13 +7,10 @@
 -include_lib("nitrogen_elements/include/nitrogen_elements.hrl").
 -compile(export_all).
 
-%% main() -> #template{file=filename:join([web_common:templates(), "onecolumn.html"])}.
-
-%% title() -> "Grid Example".
-%% headline() -> "Grid Example".
-
 body() ->
-    wf:wire(jqgrid, #jqgrid_event{type = ?ONSELECTROW}),
+
+    wf:wire(jqgrid, #jqgrid_event{type = ?ONSELECTROW, event_name="myEvent"}),
+
     [
 	#jqgrid{
 	    id = jqgrid,
