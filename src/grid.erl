@@ -32,7 +32,10 @@ body() ->
 		{sortorder, <<"desc">>},
 		{caption, <<"JSON Example">>}
 	    ],
-	    actions = [#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONSELECTROW}]
+	    actions = [
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONSELECTROW},
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONCELLSELECT}
+	    ]
 	}
     ].
 
