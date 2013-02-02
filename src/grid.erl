@@ -9,7 +9,9 @@
 
 body() ->
 
-    wf:wire(jqgrid, #jqgrid_event{type = ?ONSELECTROW, event_name="myEvent"}),
+    %% wf:wire(jqgrid, #jqgrid_event{type = ?ONSELECTROW, postback = jqgrid }),
+    %% wf:wire(jqgrid, #jqgrid_event{type = ?ONSELECTROW, event_name="myEvent"}),
+    %% wf:wire(jqgrid, #jqgrid_event{type = ?ONCELLSELECT, event_name="myEvent"}),
 
     [
 	#jqgrid{
@@ -29,17 +31,18 @@ body() ->
 		{viewrecords, true},
 		{sortorder, <<"desc">>},
 		{caption, <<"JSON Example">>}
-	    ]
+	    ],
+	    actions = [#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONSELECTROW}]
 	}
     ].
 
-event(?ONSELECTROW, RowId, Status) ->
-    %% wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
-    ?PRINT({jqgrid_event, ?ONSELECTROW, RowId, Status}).
+%% event(?ONCELLSELECT, RowId, ICol, Cellcontent) ->
+%%     ?PRINT({jqgrid_event, ?ONCELLSELECT, RowId, ICol, Cellcontent}).
+%% event(?ONSELECTROW, RowId, Status) ->
+%%     ?PRINT({jqgrid_event, ?ONSELECTROW, RowId, Status}).
 
-event(EventType, Id) ->
-    %% wf:wire(wf:f("pushState(\"State ~s\", \"?state=~s\", {tabindex:~s});", [TabIndex, TabIndex, TabIndex])).
-    ?PRINT({jqgrid_event, EventType, Id}).
+event(Event) ->
+    ?PRINT({jqgrid_event, Event}).
 
 %% api_event(history_back, _B, [[_,{data, Data}]]) ->
 %%     %% ?PRINT({history_back_event, B, Data}),

@@ -78,8 +78,17 @@ event({progressbar_example_tag, Event}) ->
 event(Event) ->
     ?PRINT({event, Event}).
 
-event(EventType, RowId, Status) ->
-    grid:event(EventType, RowId, Status).
+%% %% jqgrid events
+
+%% event(?ONSELECTROW, RowId, Status) ->
+%%     grid:event(?ONSELECTROW, RowId, Status).
+
+%% event(?ONSELECTROW, RowId, Status) ->
+%%     grid:event(?ONSELECTROW, RowId, Status).
+
+%% event(?ONCELLSELECT, RowId, ICol, Cellcontent) ->
+%%     ?PRINT({grid_event, ?ONCELLSELECT}),
+%%     grid:event(?ONCELLSELECT, RowId, ICol, Cellcontent).
 
 api_event(history_back, tabs_example_tag, Data) ->
     tabs:api_event(history_back, tabs_example_tag, Data).
