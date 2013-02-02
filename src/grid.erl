@@ -9,10 +9,6 @@
 
 body() ->
 
-    %% wf:wire(jqgrid, #jqgrid_event{type = ?ONSELECTROW, postback = jqgrid }),
-    %% wf:wire(jqgrid, #jqgrid_event{type = ?ONSELECTROW, event_name="myEvent"}),
-    %% wf:wire(jqgrid, #jqgrid_event{type = ?ONCELLSELECT, event_name="myEvent"}),
-
     [
 	#jqgrid{
 	    id = jqgrid,
@@ -46,12 +42,3 @@ body() ->
 
 event(Event) ->
     ?PRINT({jqgrid_event, Event}).
-
-%% api_event(history_back, _B, [[_,{data, Data}]]) ->
-%%     %% ?PRINT({history_back_event, B, Data}),
-%%     TabIndex = proplists:get_value(tabindex, Data),
-%%     wf:wire(tabs, #tab_event_off{event = ?EVENT_TABSSHOW}),
-%%     wf:wire(tabs, #tab_select{tab = TabIndex}),
-%%     wf:wire(tabs, #tab_event_on{event = ?EVENT_TABSSHOW});
-%% api_event(A, B, C) ->
-%%     ?PRINT(A), ?PRINT(B), ?PRINT(C).
