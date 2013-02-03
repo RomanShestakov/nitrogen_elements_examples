@@ -8,5 +8,6 @@ logs
 /deps/*
 /doc/*
 /priv/static/*
+/priv/plugins/*
 !/priv/static/css
 !/priv/static/content

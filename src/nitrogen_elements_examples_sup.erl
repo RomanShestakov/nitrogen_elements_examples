@@ -47,13 +47,7 @@ dispatch_rules(DocRootBin) ->
 	    {[<<"css/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/css">>)]},
 	    {[<<"images/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/images">>)]},
 	    {[<<"nitrogen/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/nitrogen">>)]},
-	    {[<<"jquery-ui/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/jquery-ui">>)]},
-	    {[<<"jquery/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/jquery">>)]},
-	    {[<<"jqgrid/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/jqgrid">>)]},
-	    {[<<"layout/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/layout">>)]},
-	    {[<<"menubar/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/menubar">>)]},
-	    {[<<"content/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/content">>)]},
-	    {[<<"history/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/history">>)]},
+	    {[<<"plugins/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/plugins">>)]},
 	    {[<<"get_jqgrid_data">>, '...'], get_jqgrid_data, []},
 	    {'_', nitrogen_cowboy, []}
 	   ]
