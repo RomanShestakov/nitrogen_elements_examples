@@ -29,16 +29,11 @@ body() ->
 		{caption, <<"JSON Example">>}
 	    ],
 	    actions = [
-		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONSELECTROW},
-		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONCELLSELECT}
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONSELECTROW, postback = select_row},
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONCELLSELECT, postback = select_cell}
 	    ]
 	}
     ].
-
-%% event(?ONCELLSELECT, RowId, ICol, Cellcontent) ->
-%%     ?PRINT({jqgrid_event, ?ONCELLSELECT, RowId, ICol, Cellcontent}).
-%% event(?ONSELECTROW, RowId, Status) ->
-%%     ?PRINT({jqgrid_event, ?ONSELECTROW, RowId, Status}).
 
 event(Event) ->
     ?PRINT({jqgrid_event, Event}).
