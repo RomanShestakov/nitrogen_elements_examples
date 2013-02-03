@@ -29,10 +29,13 @@ body() ->
 		{caption, <<"JSON Example">>}
 	    ],
 	    actions = [
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?BEFOREREQUEST, postback = before_rqt},
 		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?BEFOREPROCESSING, postback = before_prc},
+		%% #jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?BEFORESELECTROW, postback = before_slc_row},
 		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONSELECTROW, postback = select_row},
 		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONCELLSELECT, postback = select_cell},
-		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?AFTERINSERTROW, postback = after_insert_row}
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?AFTERINSERTROW, postback = after_insert_row},
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONDBLCLICKROW, postback = on_dblclick}
 	    ]
 	}
     ].
