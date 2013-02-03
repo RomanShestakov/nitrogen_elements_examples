@@ -35,7 +35,8 @@ body() ->
 		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONSELECTROW, postback = select_row},
 		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONCELLSELECT, postback = select_cell},
 		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?AFTERINSERTROW, postback = after_insert_row},
-		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONDBLCLICKROW, postback = on_dblclick}
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONDBLCLICKROW, postback = on_dblclick},
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONHEADERCLICK, postback = on_header_click}
 	    ]
 	}
     ].
