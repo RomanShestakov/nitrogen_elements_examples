@@ -79,6 +79,9 @@ event(Event) ->
     ?PRINT({event, Event}).
 
 %% %% jqgrid events
+jqgrid_event({Postback, Event}) ->
+    grid:event({Postback, Event}).
+
 
 %% event(?ONSELECTROW, RowId, Status) ->
 %%     grid:event(?ONSELECTROW, RowId, Status).
