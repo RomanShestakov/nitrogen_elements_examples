@@ -29,8 +29,10 @@ body() ->
 		{caption, <<"JSON Example">>}
 	    ],
 	    actions = [
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?BEFOREPROCESSING, postback = before_prc},
 		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONSELECTROW, postback = select_row},
-		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONCELLSELECT, postback = select_cell}
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?ONCELLSELECT, postback = select_cell},
+		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?AFTERINSERTROW, postback = after_insert_row}
 	    ]
 	}
     ].
