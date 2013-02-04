@@ -23,7 +23,7 @@ body() -> [
     	north_options = [{size, 60}, {spacing_open, 0}, {spacing_closed, 0}],
 
     	west=#panel{id = west, text = "West"},
-    	west_options=[{size, 140}, {spacing_open, 0}, {spacing_closed, 0}],
+    	west_options=[{size, 200}, {spacing_open, 0}, {spacing_closed, 0}],
 
     	center=#panel{id = center, body = [ #label{ text = "Center" }]},
 
@@ -55,17 +55,25 @@ menubar() -> [
 }].
 
 event(action_dialog_example) ->
+    wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [dialog:body()]});
 event(accordion) ->
+    wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [accordion:body(accordion_example_tag)]});
 event(tabs) ->
+    wf:update(west, #panel{id = west, body = [tabs:control_panel(tabs_example_tag)]}),
     wf:update(center, #panel{id = center, body = [tabs:body(tabs_example_tag)]});
 event(menu) ->
+    wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [menu:body(menu_example_tag)]});
 event(grid) ->
+    wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [grid:body()]});
 event(progressbar) ->
+    wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [progressbar:body(progressbar_example_tag)]});
+
+%% postbacks from controls
 event({tabs_example_tag, Event}) ->
     tabs:event(Event);
 event({menu_example_tag, Event}) ->
