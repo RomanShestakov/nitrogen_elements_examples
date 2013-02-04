@@ -28,7 +28,7 @@ body() -> [
     	center=#panel{id = center, body = [ #label{ text = "Center" }]},
 
     	east=#panel{id = east, text = "East"},
-    	east_options=[{size, 600}, {spacing_open, 0}, {spacing_closed, 0}],
+    	east_options=[{size, 300}, {spacing_open, 0}, {spacing_closed, 0}],
 
     	south=#panel{id = south, text = "South"},
     	south_options=[{size, 30}, {spacing_open, 0}, {spacing_closed, 0}]
