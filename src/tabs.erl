@@ -18,10 +18,10 @@ body(Tag) ->
 	    options = [{selected, 0}],
 	    tabs = [
 		#tab{title = "Tab 1", url = "/content/tabs2.htm"},
-		#tab{title = "Tab 2", body = ["Tab two body..."]},
-		#tab{title = "Tab 3", body = ["Tab three body..."]}
+		#tab{title = "Tab 2", body = ["Tab two body... Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus."]},
+		#tab{title = "Tab 3", body = ["Tab three body... Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum."]}
 	    ],
-	   actions =
+	    actions =
 	    [
 		#tab_event_on{trigger = tabs, type = ?EVENT_TABS_ACTIVATE, postback = {Tag, {tabs, ?EVENT_TABS_ACTIVATE}}},
 		#tab_event_on{trigger = tabs, type = ?EVENT_TABS_BEFORE_ACTIVATE, postback = {Tag, {tabs, ?EVENT_TABS_BEFORE_ACTIVATE}}},
