@@ -57,23 +57,28 @@ menubar() -> [
 
 event(action_dialog_example) ->
     wf:update(west, #panel{id = west, body = []}),
-    wf:update(center, #panel{id = center, body = [dialog:body()]});
+    wf:update(center, #panel{id = center, body = [dialog:body()]}),
+    wf:update(east, #panel{id = east, body = []});
 event(accordion) ->
     wf:update(west, #panel{id = west, body = []}),
-    wf:update(center, #panel{id = center, body = [accordion:body(accordion_example_tag)]});
+    wf:update(center, #panel{id = center, body = [accordion:body(accordion_example_tag)]}),
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/docs/elements/accordion.html"}]});
 event(tabs) ->
     wf:update(west, #panel{id = west, body = [tabs:control_panel(tabs_example_tag)]}),
     wf:update(center, #panel{id = center, body = [tabs:body(tabs_example_tag)]}),
     wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/docs/elements/tabs.html"}]});
 event(menu) ->
     wf:update(west, #panel{id = west, body = []}),
-    wf:update(center, #panel{id = center, body = [menu:body(menu_example_tag)]});
+    wf:update(center, #panel{id = center, body = [menu:body(menu_example_tag)]}),
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/docs/elements/menu.html"}]});
 event(grid) ->
     wf:update(west, #panel{id = west, body = []}),
-    wf:update(center, #panel{id = center, body = [grid:body()]});
+    wf:update(center, #panel{id = center, body = [grid:body()]}),
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/docs/elements/jqgrid.html"}]});
 event(progressbar) ->
     wf:update(west, #panel{id = west, body = []}),
-    wf:update(center, #panel{id = center, body = [progressbar:body(progressbar_example_tag)]});
+    wf:update(center, #panel{id = center, body = [progressbar:body(progressbar_example_tag)]}),
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/docs/elements/progressbar.html"}]});
 
 %% postbacks from controls
 event({tabs_example_tag, Event}) ->
