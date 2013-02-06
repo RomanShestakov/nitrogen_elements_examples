@@ -48,7 +48,7 @@ dispatch_rules(DocRootBin) ->
 	    {[<<"images/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/images">>)]},
 	    {[<<"content/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"content">>)]},
 	    {[<<"nitrogen/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/nitrogen">>)]},
-	    {[<<"docs/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/docs">>)]},
+	    {[<<"doc/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/doc">>)]},
 	    {[<<"plugins/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"plugins">>)]},
 	    {[<<"get_jqgrid_data">>, '...'], get_jqgrid_data, []},
 	    {'_', nitrogen_cowboy, []}
