@@ -62,23 +62,23 @@ event(action_dialog_example) ->
 event(accordion) ->
     wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [accordion:body(accordion_example_tag)]}),
-    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/elements/accordion.html"}]});
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/html/elements/accordion.html"}]});
 event(tabs) ->
     wf:update(west, #panel{id = west, body = [tabs:control_panel(tabs_example_tag)]}),
     wf:update(center, #panel{id = center, body = [tabs:body(tabs_example_tag)]}),
-    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/elements/tabs.html"}]});
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/html/elements/tabs.html"}]});
 event(menu) ->
     wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [menu:body(menu_example_tag)]}),
-    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/elements/menu.html"}]});
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/html/elements/menu.html"}]});
 event(grid) ->
     wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [grid:body()]}),
-    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/elements/jqgrid.html"}]});
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/html/elements/jqgrid.html"}]});
 event(progressbar) ->
     wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [progressbar:body(progressbar_example_tag)]}),
-    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/elements/progressbar.html"}]});
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/html/elements/progressbar.html"}]});
 
 %% postbacks from controls
 event({tabs_example_tag, Event}) ->
