@@ -28,7 +28,8 @@ body() -> [
     	center=#panel{id = center, body = [ #label{ text = "Center" }]},
 
     	east=#panel{id = east, text = "East"},
-    	east_options=[{size, 300}, {spacing_open, 0}, {spacing_closed, 0}],
+    	east_options=[{size, 300}],
+    	%% east_options=[{size, 300}, {spacing_open, 0}, {spacing_closed, 0}],
 
     	south=#panel{id = south, text = "South"},
     	south_options=[{size, 30}, {spacing_open, 0}, {spacing_closed, 0}]
@@ -62,7 +63,8 @@ event(accordion) ->
     wf:update(center, #panel{id = center, body = [accordion:body(accordion_example_tag)]});
 event(tabs) ->
     wf:update(west, #panel{id = west, body = [tabs:control_panel(tabs_example_tag)]}),
-    wf:update(center, #panel{id = center, body = [tabs:body(tabs_example_tag)]});
+    wf:update(center, #panel{id = center, body = [tabs:body(tabs_example_tag)]}),
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/docs/elements/tabs.html"}]});
 event(menu) ->
     wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [menu:body(menu_example_tag)]});
