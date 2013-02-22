@@ -11,7 +11,6 @@
 
 -compile(export_all).
 
--include_lib("webmachine/include/webmachine.hrl").
 -include_lib ("nitrogen_core/include/wf.hrl").
 
 -define(APP, nitrogen_elements_examples).
