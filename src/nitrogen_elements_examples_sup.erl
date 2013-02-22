@@ -31,28 +31,26 @@ init([]) ->
     {ok, Port} = application:get_env(port),
     {ok, ServerName} = application:get_env(server_name),
     {ok, DocRoot} = application:get_env(document_root),
-    DocRootBin = wf:to_binary(DocRoot),
 
-    io:format("Starting Cowboy Server (~s) on ~s:~p, root: '~s'~n", [ServerName, BindAddress, Port, DocRoot]),
-    HttpOpts = [{max_keepalive, 50}, {dispatch, dispatch_rules(DocRootBin)}],
+    io:format("Starting Cowboy Server (~s) on ~s:~p, ~n", [ServerName, BindAddress, Port]),
+    HttpOpts = [{max_keepalive, 50}, {dispatch, dispatch_rules()}],
     cowboy:start_listener(http, 100,
                           cowboy_tcp_transport, [{port, Port}],
                           cowboy_http_protocol, HttpOpts),
     {ok, {{one_for_one, 5, 10}, []}}.
 
-dispatch_rules(DocRootBin) ->
+dispatch_rules() ->
     %% {Host, list({Path, Handler, Opts})}
     [{'_', [
-	    {[<<"css/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/css">>)]},
-	    {[<<"images/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/images">>)]},
-	    {[<<"content/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"content">>)]},
-	    {[<<"nitrogen/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/nitrogen">>)]},
-	    {[<<"doc/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"static/doc">>)]},
-	    {[<<"plugins/">>, '...'], cowboy_http_static, [get_path(DocRootBin, <<"plugins">>)]},
-	    {[<<"get_jqgrid_data">>, '...'], get_jqgrid_data, []},
-	    {'_', nitrogen_cowboy, []}
-	   ]
-     }].
-
-get_path(DocRootBin, Path) ->
-    {directory, filename:join([DocRootBin, Path])}.
+	{[<<"content">>, '...'], cowboy_http_static, [{directory, {priv_dir, ?APP, [<<"content">>]}},
+	    {mimetypes, [{<<".css">>, [<<"text/css">>]}, {mimetypes, {fun mimetypes:path_to_mimes/2, default}}]}]},
+	{[<<"static">>, '...'], cowboy_http_static, [{directory, {priv_dir, ?APP, [<<"static">>]}},
+	    {mimetypes, [{<<".css">>, [<<"text/css">>]}, {mimetypes, {fun mimetypes:path_to_mimes/2, default}}]}]},
+	{[<<"plugins">>, '...'], cowboy_http_static, [{directory, {priv_dir, ?APP, [<<"plugins">>]}},
+	    {mimetypes, [{<<".css">>, [<<"text/css">>]}, {mimetypes, {fun mimetypes:path_to_mimes/2, default}}]}]},
+	{[<<"doc">>, '...'], cowboy_http_static, [{directory, {priv_dir, ?APP, [<<"doc">>]}},
+	    {mimetypes, [{<<".css">>, [<<"text/css">>]}, {mimetypes, {fun mimetypes:path_to_mimes/2, default}}]}]},
+	{[<<"get_jqgrid_data">>, '...'], get_jqgrid_data, []},
+	{'_', nitrogen_cowboy, []}
+    ]
+    }].
