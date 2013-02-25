@@ -4,18 +4,17 @@
 
 -module(get_jqgrid_data).
 
--export([init/3, allowed_methods/2, content_types_provided/2, to_json/2]).
+-export([init/3, content_types_provided/2, to_json/2]).
 
 init(_Transport, _Req, []) ->
-    {upgrade, protocol, cowboy_http_rest}.
-
-allowed_methods(ReqData, Context) ->
-    {['HEAD', 'GET', 'PUT', 'POST', 'DELETE'], ReqData, Context}.
+    {upgrade, protocol, cowboy_rest}.
 
 content_types_provided(Req, State) ->
-    {[{{<<"application">>, <<"json">>, []}, to_json}], Req, State}.
+    {[
+      {<<"application/json">>, to_json}
+     ], Req, State}.
 
-to_json(ReqData, Context) ->
+to_json(Req, State) ->
     Data = {struct, [{<<"total">>, 1},
 		     {<<"page">>, 1},
 		     {<<"records">>, 2},
@@ -24,4 +23,4 @@ to_json(ReqData, Context) ->
 				  ]}
 		    ]},
     Data1 = iolist_to_binary(mochijson2:encode(Data)),
-    {Data1, ReqData, Context}.
+    {Data1, Req, State}.
