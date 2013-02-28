@@ -26,7 +26,7 @@ start_link() ->
 
 init([]) ->
     {ok, Port} = application:get_env(port),
-    io:format("Starting Cowboy Server ~p~n", [ Port ]),
+    io:format("Starting Cowboy Server ~p ~n", [Port]),
     {ok, _} = cowboy:start_http(http, 100,
 				[{port, Port}],
 				[{env, [{dispatch, dispatch_rules()}]}]),
@@ -45,5 +45,6 @@ dispatch_rules() ->
 	    {["/doc/[...]"], cowboy_static, [{directory, {priv_dir, ?APP, [<<"doc">>]}},
 		{mimetypes, {fun mimetypes:path_to_mimes/2, default}}]},
 	    {["/get_jqgrid_data/[...]"], get_jqgrid_data, []},
+	    {["/websocket"], websocket_handler, []},
 	    {'_', nitrogen_cowboy, []}
     ]}]).
