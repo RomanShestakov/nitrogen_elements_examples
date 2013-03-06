@@ -51,7 +51,8 @@ menubar() -> [
 	    #item{postback = tabs, title = "Tabs"},
 	    #item{postback = menu, title = "Menu"},
 	    #item{postback = grid, title = "Grid"},
-	    #item{postback = progressbar, title = "Progressbar"}
+	    #item{postback = progressbar, title = "Progressbar"},
+	    #item{postback = viz, title = "Viz.js"}
 	]
 }].
 
@@ -75,10 +76,14 @@ event(grid) ->
     wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [grid:body()]}),
     wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/html/elements/jqgrid.html"}]});
+event(viz) ->
+    wf:update(west, #panel{id = west, body = [viz:control_panel(viz_example_tag)]}),
+    wf:update(center, #panel{id = center, body = [viz:body(viz_example_tag)]});
 event(progressbar) ->
     wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [progressbar:body(progressbar_example_tag)]}),
-    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/html/elements/progressbar.html"}]});
+    wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/html/elements/progressbar.html"
+}]});
 
 %% postbacks from controls
 event({tabs_example_tag, Event}) ->
@@ -87,6 +92,8 @@ event({menu_example_tag, Event}) ->
     menu:event(Event);
 event({dialog_example_tag, Event}) ->
     dialog:event(Event);
+event({viz_example_tag, Event}) ->
+    viz:event(Event);
 event({progressbar_example_tag, Event}) ->
     ?PRINT({progressbar_event, Event}),
     progressbar:event(Event);
