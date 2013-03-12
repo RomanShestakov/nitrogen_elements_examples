@@ -18,14 +18,30 @@ body(_Tag) ->
 	#viz{id = viz, data = ?DATA}
     ].
 
+    %% wf:wire(ID, wf:f("$(function(){jQuery(obj('~s')).html(Viz('~s', \"svg\"));})", [ID, Data])),
+
+
 control_panel(Tag) ->
-    #panel{id=control_panel, body = [
-	#button{id=btn_update_graph, text="Update Graph", actions=[#event{type=click, postback={Tag, update_graph}}]}
+    #panel{id = control_panel, body = [
+	#textbox{id = server_txt, style = "width: 100%", text = "ws://localhost:8000/websocket"},
+	#p{},
+	%% postback is to the index page, event from index.erl will call event(connect)
+	#button{id = btn_tiggle_connect, text = "Connect", actions = [#event{type = click, postback = {Tag,connect}}]}
     ]}.
 
-event(update_graph) ->
-    ?PRINT({viz_event, update_graph}),
+event({Tag, connect}) ->
+    %% ?PRINT({viz_event, connect}),
+    Server = wf:q(server_txt),
+    ?PRINT({viz_server, Server}),
+    wf:wire(#ws_open{server = Server, on_open = "function(event){console.log('open')};",
+	on_message = wf:f("function(event){jQuery(obj('~s')).html(Viz(event.data, \"svg\"));};", [viz])}),
+    wf:replace(btn_tiggle_connect,
+	#button{id = btn_tiggle_connect, text = "Disconnect", actions = [#event{type = click, postback = {Tag, disconnect}}]}),
     wf:replace(viz, #viz{id = viz, data = ?DATA1});
+event({Tag, disconnect}) ->
+    wf:replace(btn_tiggle_connect,
+	#button{id = btn_tiggle_connect, text = "Connect", actions = [#event{type = click, postback = {Tag, connect}}]}),
+    wf:wire(#ws_close{on_close = "function(event){console.log('close')};"});
 event(Event) ->
     ?PRINT({viz_event, Event}).
 

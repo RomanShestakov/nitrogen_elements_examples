@@ -45,6 +45,6 @@ dispatch_rules() ->
 	    {["/doc/[...]"], cowboy_static, [{directory, {priv_dir, ?APP, [<<"doc">>]}},
 		{mimetypes, {fun mimetypes:path_to_mimes/2, default}}]},
 	    {["/get_jqgrid_data/[...]"], get_jqgrid_data, []},
-	    {["/websocket"], websocket_handler, []},
+	    {["/websocket"], ws_handler, []},
 	    {'_', nitrogen_cowboy, []}
     ]}]).

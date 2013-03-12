@@ -93,7 +93,7 @@ event({menu_example_tag, Event}) ->
 event({dialog_example_tag, Event}) ->
     dialog:event(Event);
 event({viz_example_tag, Event}) ->
-    viz:event(Event);
+    viz:event({viz_example_tag, Event});
 event({progressbar_example_tag, Event}) ->
     ?PRINT({progressbar_event, Event}),
     progressbar:event(Event);
