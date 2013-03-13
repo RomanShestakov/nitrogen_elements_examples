@@ -18,31 +18,26 @@ body(_Tag) ->
 	#viz{id = viz, data = ?DATA}
     ].
 
-    %% wf:wire(ID, wf:f("$(function(){jQuery(obj('~s')).html(Viz('~s', \"svg\"));})", [ID, Data])),
-
-
 control_panel(Tag) ->
     #panel{id = control_panel, body = [
 	#textbox{id = server_txt, style = "width: 100%", text = "ws://localhost:8000/websocket"},
 	#p{},
 	%% postback is to the index page, event from index.erl will call event(connect)
-	#button{id = btn_tiggle_connect, text = "Connect", actions = [#event{type = click, postback = {Tag,connect}}]}
+	#button{id = conn, text = "Connect", actions = [#event{type = click, postback = {Tag, connect}}]}
     ]}.
 
 event({Tag, connect}) ->
-    %% ?PRINT({viz_event, connect}),
     Server = wf:q(server_txt),
     ?PRINT({viz_server, Server}),
-    wf:wire(#ws_open{server = Server, on_open = "function(event){console.log('open')};",
-	on_message = wf:f("function(event){jQuery(obj('~s')).html(Viz(event.data, \"svg\"));};", [viz])}),
-    wf:replace(btn_tiggle_connect,
-	#button{id = btn_tiggle_connect, text = "Disconnect", actions = [#event{type = click, postback = {Tag, disconnect}}]}),
-    wf:replace(viz, #viz{id = viz, data = ?DATA1});
+    wf:wire(#ws_open{server = Server, func = "function(event){console.log('open')};"}),
+    wf:wire(#ws_message{func = wf:f("function(event){var g = jQuery(obj('~s'));
+                                               g.html(Viz(event.data, \"svg\"));
+	                                       g.find(\"svg\").width('100%');
+	                                       g.find(\"svg\").graphviz({status: true});};", [viz])}),
+    wf:wire(#ws_error{func = "function(event){console.log('error')};"}),
+    wf:replace(conn, #button{id = conn, text = "Disconnect", actions = [#event{type = click, postback = {Tag, disconnect}}]});
 event({Tag, disconnect}) ->
-    wf:replace(btn_tiggle_connect,
-	#button{id = btn_tiggle_connect, text = "Connect", actions = [#event{type = click, postback = {Tag, connect}}]}),
-    wf:wire(#ws_close{on_close = "function(event){console.log('close')};"});
+    wf:wire(#ws_close{}),
+    wf:replace(conn, #button{id = conn, text = "Connect", actions = [#event{type = click, postback = {Tag, connect}}]});
 event(Event) ->
     ?PRINT({viz_event, Event}).
-
-

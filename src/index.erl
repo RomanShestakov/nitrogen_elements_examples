@@ -78,7 +78,8 @@ event(grid) ->
     wf:update(east, #panel{id = east, actions = [#ajax_load{target = east, url = "/static/doc/html/elements/jqgrid.html"}]});
 event(viz) ->
     wf:update(west, #panel{id = west, body = [viz:control_panel(viz_example_tag)]}),
-    wf:update(center, #panel{id = center, body = [viz:body(viz_example_tag)]});
+    wf:update(center, #panel{id = center, body = [viz:body(viz_example_tag)]}),
+    wf:update(east, #panel{id = east, body = []});
 event(progressbar) ->
     wf:update(west, #panel{id = west, body = []}),
     wf:update(center, #panel{id = center, body = [progressbar:body(progressbar_example_tag)]}),
