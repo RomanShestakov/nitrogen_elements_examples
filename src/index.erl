@@ -14,8 +14,12 @@ main() ->
 title() -> "Nitrogen Elements Examples".
 headline() -> "Nitrogen Elements Examples".
 
-body() -> [
+body() ->
 
+    wf:wire(wf:f("function resizeGrid(pane, $Pane, paneState) {
+          jQuery(obj('~s')).jqGrid('setGridWidth', paneState.innerWidth - 2, 'true')};", [jqgrid])),
+
+[
     % Main layout...
     #layout {
 	%% add menubar for navigation
@@ -26,10 +30,11 @@ body() -> [
     	west_options=[{size, 200}, {spacing_open, 0}, {spacing_closed, 0}],
 
     	center=#panel{id = center, body = [ #label{ text = "Center" }]},
+    	center_options=[{onresize, resizeGrid},	{triggerEventOnLoad, true}],
 
     	east=#panel{id = east, text = "East"},
     	east_options=[{size, 300}],
-    	%% east_options=[{size, 300}, {spacing_open, 0}, {spacing_closed, 0}],
+    	%%east_options=[{size, 300}, {spacing_open, 0}, {spacing_closed, 0}],
 
     	south=#panel{id = south, text = "South"},
     	south_options=[{size, 30}, {spacing_open, 0}, {spacing_closed, 0}]

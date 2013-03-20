@@ -7,6 +7,8 @@
 -include_lib("nitrogen_elements/include/nitrogen_elements.hrl").
 -compile(export_all).
 
+%% http://stackoverflow.com/questions/2919723/make-jqgrid-fill-its-container/6045451#6045451
+
 body() ->
 
     [
@@ -26,8 +28,10 @@ body() ->
 		{sortname, 'id'},
 		{viewrecords, true},
 		{sortorder, <<"desc">>},
-		{caption, <<"JSON Example">>}
+		{caption, <<"JSON Example">>},
+		{autowidth, true}
 	    ],
+
 	    actions = [
 		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?BEFOREREQUEST, postback = before_rqt},
 		#jqgrid_event{trigger = jqgrid, target = jqgrid, type = ?BEFORESELECTROW, postback = before_slc_row},
