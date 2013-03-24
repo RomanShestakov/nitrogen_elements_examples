@@ -46,5 +46,6 @@ dispatch_rules() ->
 		{mimetypes, {fun mimetypes:path_to_mimes/2, default}}]},
 	    {["/get_jqgrid_data/[...]"], get_jqgrid_data, []},
 	    {["/websocket"], ws_handler, []},
+	    {["/jqdata"], jqdata, []},
 	    {'_', nitrogen_cowboy, []}
     ]}]).
